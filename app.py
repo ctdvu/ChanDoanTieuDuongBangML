@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from functools import lru_cache
 from pathlib import Path
 
 import joblib
@@ -38,6 +39,7 @@ def health():
     return {"status": "ok"}, 200
 
 
+@lru_cache(maxsize=1)
 def load_assets():
     if not MODEL_PATH.exists() or not METADATA_PATH.exists():
         raise FileNotFoundError("Chưa có mô hình. Hãy chạy toàn bộ diabetes_model_comparison.ipynb trước.")
