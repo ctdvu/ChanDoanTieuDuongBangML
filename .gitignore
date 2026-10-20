@@ -1,0 +1,9 @@
+# Generated model and local Python/Jupyter files
+artifacts/*.joblib
+__pycache__/
+.ipynb_checkpoints/
+
+# Local environment files
+.venv/
+venv/
+*.py[cod]

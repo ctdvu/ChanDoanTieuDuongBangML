@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sàng lọc nguy cơ tiểu đường</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">BRFSS 2015 · HỖ TRỢ SÀNG LỌC</p>
+        <h1>Đánh giá nguy cơ<br><span>tiểu đường type 2</span></h1>
+        <p class="subtitle">Nhập các chỉ số sức khỏe để nhận ước tính từ mô hình học máy.</p>
+      </div>
+      {% if metadata %}
+      <aside class="model-badge">
+        <span>Mô hình đang dùng</span>
+        <strong>{{ metadata.model_name }}</strong>
+        <small>ROC-AUC: {{ '%.3f'|format(metadata.metrics['ROC-AUC']) }}</small>
+      </aside>
+      {% endif %}
+    </header>
+
+    {% if error %}<div class="notice error">{{ error }}</div>{% endif %}
+    {% if result %}
+    <section class="result {{ result.class_name }}" aria-live="polite">
+      <div class="result-ring"><span>{{ result.probability }}%</span><small>ước tính</small></div>
+      <div><p>Kết quả sàng lọc</p><h2>{{ result.level }}</h2><p>Đây không phải kết luận chẩn đoán. Nếu có triệu chứng hoặc lo lắng, hãy gặp nhân viên y tế.</p></div>
+    </section>
+    {% endif %}
+
+    <form method="post" class="assessment">
+      <div class="form-head"><div><p class="eyebrow">BẢNG KHẢO SÁT</p><h2>Thông tin sức khỏe</h2></div><span>21 chỉ số</span></div>
+      <div class="form-grid">
+      {% for key, label, kind in features %}
+        <label class="field" for="{{ key }}">
+          <span>{{ label }}</span>
+          {% if kind == 'binary' %}
+          <select id="{{ key }}" name="{{ key }}" required>
+            <option value="0" {% if values.get(key, 0)|float == 0 %}selected{% endif %}>Không</option>
+            <option value="1" {% if values.get(key)|float == 1 %}selected{% endif %}>Có</option>
+          </select>
+          {% elif kind == 'sex' %}
+          <select id="{{ key }}" name="{{ key }}" required><option value="0" {% if values.get(key, 0)|float == 0 %}selected{% endif %}>Nữ</option><option value="1" {% if values.get(key)|float == 1 %}selected{% endif %}>Nam</option></select>
+          {% elif kind == 'bmi' %}
+          <input id="{{ key }}" name="{{ key }}" type="number" min="12" max="80" step="0.1" value="{{ values.get(key, 25) }}" required>
+          {% elif kind == 'days' %}
+          <input id="{{ key }}" name="{{ key }}" type="number" min="0" max="30" step="1" value="{{ values.get(key, 0) }}" required>
+          {% elif kind == 'health' %}
+          <select id="{{ key }}" name="{{ key }}" required>{% for n in range(1, 6) %}<option value="{{ n }}" {% if values.get(key, 3)|float == n %}selected{% endif %}>{{ n }}</option>{% endfor %}</select>
+          {% elif kind == 'age' %}
+          <select id="{{ key }}" name="{{ key }}" required>{% for n in range(1, 14) %}<option value="{{ n }}" {% if values.get(key, 7)|float == n %}selected{% endif %}>Nhóm {{ n }}</option>{% endfor %}</select>
+          {% elif kind == 'education' %}
+          <select id="{{ key }}" name="{{ key }}" required>{% for n in range(1, 7) %}<option value="{{ n }}" {% if values.get(key, 4)|float == n %}selected{% endif %}>Mức {{ n }}</option>{% endfor %}</select>
+          {% else %}
+          <select id="{{ key }}" name="{{ key }}" required>{% for n in range(1, 9) %}<option value="{{ n }}" {% if values.get(key, 6)|float == n %}selected{% endif %}>Mức {{ n }}</option>{% endfor %}</select>
+          {% endif %}
+        </label>
+      {% endfor %}
+      </div>
+      <button type="submit">Phân tích nguy cơ <span>→</span></button>
+    </form>
+    <footer>Ứng dụng phục vụ mục đích học tập và sàng lọc ban đầu, không thay thế tư vấn y khoa.</footer>
+  </main>
+</body>
+</html>

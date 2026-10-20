@@ -1,0 +1,46 @@
+{
+  "model_name": "Rừng ngẫu nhiên",
+  "selection_metric": "Validation ROC-AUC",
+  "feature_names": [
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "BMI",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "GenHlth",
+    "MentHlth",
+    "PhysHlth",
+    "DiffWalk",
+    "Sex",
+    "Age",
+    "Education",
+    "Income"
+  ],
+  "test_rows": 253680,
+  "metrics": {
+    "Mô hình": "Rừng ngẫu nhiên",
+    "ROC-AUC": 0.8286138273710563,
+    "PR-AUC": 0.8026897766976215,
+    "Accuracy": 0.7474361694603578,
+    "Balanced accuracy": 0.7474392945832182,
+    "Precision": 0.7273199896022875,
+    "Recall": 0.7916254067053331,
+    "F1": 0.7581114949536002
+  },
+  "full_brfss_metrics": {
+    "Mô hình": "Rừng ngẫu nhiên",
+    "ROC-AUC": 0.857188219280906,
+    "PR-AUC": 0.4974429120527065,
+    "Accuracy": 0.7292809839167455,
+    "F1": 0.46274681603404577
+  },
+  "note": "Chỉ hỗ trợ sàng lọc, không thay thế chẩn đoán y khoa."
+}
