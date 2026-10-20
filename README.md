@@ -20,4 +20,14 @@ Mở `http://127.0.0.1:5000` trên desktop hoặc điện thoại cùng mạng (
 
 Mô hình triển khai được chọn bằng ROC-AUC trên validation hold-out (20% tách từ file train), rồi fit lại trên toàn bộ train. Điều này cần thiết vì file BRFSS đầy đủ có thể chứa các bản ghi đã được lấy vào bộ train 50/50; các chỉ số trên file đầy đủ được lưu riêng để tham khảo, không dùng để chọn model.
 
+## Deploy trên Render
+
+Repository đã có sẵn `render.yaml`. Trên Render chọn **New → Blueprint**, kết nối repository này và deploy. Nếu tạo Web Service thủ công, dùng:
+
+- Build Command: `pip install -r requirements.txt`
+- Start Command: `gunicorn app:app`
+- Health Check Path: `/`
+
+Model được nén và commit cùng repository để Render không phải huấn luyện lại khi build.
+
 Kết quả chỉ phục vụ học tập và hỗ trợ sàng lọc, không phải chẩn đoán y khoa.

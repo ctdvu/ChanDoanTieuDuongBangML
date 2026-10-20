@@ -1,5 +1,6 @@
 # Generated model and local Python/Jupyter files
 artifacts/*.joblib
+!artifacts/best_diabetes_model.joblib
 __pycache__/
 .ipynb_checkpoints/
 
