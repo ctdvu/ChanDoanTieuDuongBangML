@@ -25,7 +25,7 @@ Mô hình triển khai được chọn bằng ROC-AUC trên validation hold-out 
 Repository đã có sẵn `render.yaml`. Trên Render chọn **New → Blueprint**, kết nối repository này và deploy. Nếu tạo Web Service thủ công, dùng:
 
 - Build Command: `pip install -r requirements.txt`
-- Start Command: `gunicorn app:app`
+- Start Command: `gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 120 app:app`
 - Health Check Path: `/`
 
 Model được nén và commit cùng repository để Render không phải huấn luyện lại khi build.
