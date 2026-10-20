@@ -26,7 +26,7 @@ Repository đã có sẵn `render.yaml`. Trên Render chọn **New → Blueprint
 
 - Build Command: `pip install -r requirements.txt`
 - Start Command: `gunicorn --bind 0.0.0.0:$PORT --workers 1 --timeout 120 app:app`
-- Health Check Path: `/`
+- Health Check Path: `/health`
 
 Model được nén và commit cùng repository để Render không phải huấn luyện lại khi build.
 

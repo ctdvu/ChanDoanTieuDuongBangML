@@ -32,6 +32,12 @@ FEATURES = [
 ]
 
 
+@app.get("/health")
+def health():
+    """Lightweight Render readiness probe; deliberately does not load the model."""
+    return {"status": "ok"}, 200
+
+
 def load_assets():
     if not MODEL_PATH.exists() or not METADATA_PATH.exists():
         raise FileNotFoundError("Chưa có mô hình. Hãy chạy toàn bộ diabetes_model_comparison.ipynb trước.")
